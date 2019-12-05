@@ -1,4 +1,3 @@
-import torch
 import torch.utils.data
 
 
@@ -16,5 +15,7 @@ class GrayscaleImageDataset(torch.utils.data.Dataset):
         return len(self.data_source)
 
     def __getitem__(self, index):
-        tensors = self.data_source[index]
-        return tuple(torch.from_numpy(tensor[None]) for tensor in tensors)
+        if isinstance(index, int):
+            index = slice(index, index+1)
+
+        return self.data_source[index]

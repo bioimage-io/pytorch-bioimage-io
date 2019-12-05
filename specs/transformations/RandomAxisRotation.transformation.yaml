@@ -5,7 +5,7 @@ cite:
       doi: TODO
 authors:
     - Constantin Pape
-documentation: bce_loss.md
+documentation: transformations.md
 tags: [loss, binary cross entropy]
 
 format_version: 0.1.0

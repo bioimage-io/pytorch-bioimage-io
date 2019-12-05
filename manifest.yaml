@@ -3,7 +3,5 @@ transformations:
     - specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
     - specs/transformations/RandomAxisRotation.transformation.yaml
     - specs/transformations/Sigmoid.transformation.yaml
-readers:
-    - specs/readers/BroadNucleusData.reader.yaml
 samplers:
     - specs/samplers/GrayscaleImageSampler.sampler.yaml

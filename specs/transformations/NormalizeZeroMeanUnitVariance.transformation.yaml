@@ -5,7 +5,7 @@ cite:
       doi: TODO
 authors:
     - Constantin Pape
-documentation: ./NormalizeZeroMeanUnitVariance.md
+documentation: transformations.md
 tags: [activation, sigmoid]
 
 format_version: 0.1.0
@@ -15,8 +15,7 @@ framework: pytorch
 dependencies: ../../env_no_pytorch.yaml
 
 source: torchbio.transformations.normalizations.NormalizeZeroMeanUnitVariance
-required_kwargs: [apply_to]
-optional_kwargs: {eps: 1.0e-6, mean: null, std: null}
+optional_kwargs: {apply_to: null, eps: 1.0e-6, mean: null, std: null}
 
 inputs: any
 outputs: same

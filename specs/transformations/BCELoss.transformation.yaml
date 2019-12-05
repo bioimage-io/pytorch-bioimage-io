@@ -5,7 +5,7 @@ cite:
       doi: TODO
 authors:
     - Constantin Pape
-documentation: BCELoss.md
+documentation: transformations.md
 tags: [loss, binary cross entropy]
 
 format_version: 0.1.0
@@ -32,5 +32,5 @@ outputs:
     - name: loss
       data_type: float32
       data_range: [0, 1]
-      # axes: null   we don't care about the axes here, so this should be optional
+      axes: "c"
       shape: [0]
