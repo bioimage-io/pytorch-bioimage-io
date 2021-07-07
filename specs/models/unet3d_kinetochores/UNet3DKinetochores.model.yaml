@@ -1,0 +1,73 @@
+# TODO physical scale of the data
+format_version: 0.3.0
+
+name: UNet 3D Kinetochores
+description: A 3d U-Net trained on the Kinetochores dataset.
+authors:
+  - Ashwin Samudre;@bioimage-io
+
+# we allow for multiple citations. Each citation contains TEXT, DOI and URL. One of DOI or URL needs to be given.
+cite:
+  - text: "Wolny, Cerrone et al. Accurate And Versatile 3D Segmentation Of Plant Tissues At Cellular Resolution. elife."
+    doi: https://doi.org/10.1101/2020.01.17.910562
+  - text: "PyTorch-3DUNet"
+    url: https://www.biorxiv.org/content/early/2020/01/18/2020.01.17.910562
+
+git_repo: https://github.com/bioimage-io/pytorch-bioimage-io/tree/master/specs/models/unet3d_kinetochores
+tags: [unet3d, pytorch, kinetochores, segmentation]
+license: MIT
+
+documentation: UNet3DKinetochores.md
+covers: []  # todo unet 2d arch image
+attachments: {}
+timestamp: 2019-12-11T12:22:32Z  # ISO 8601
+
+inputs:
+  - name: raw
+    description: raw input
+    axes: bczyx  # letters of axes in btczyx
+    data_type: float32
+    data_range: [-inf, inf]
+    shape: [1, 1, 48, 128, 128]
+    preprocessing:  # list of preprocessing steps
+      - name: zero_mean_unit_variance  # name of preprocessing step
+        kwargs:
+          mode: per_sample      # mode in [fixed, per_dataset, per_sample]
+          axes: zyx              # subset of axes to normalize jointly, batch ('b') is not a valid axis key here!
+#      # example for zero_mean_unit_variance with mode 'fixed'
+#      - name: zero_mean_unit_variance
+#        kwargs:  # example kwargs for zero_mean_unit_variance
+#          mode: fixed
+#          axes: xy      # subset of axes to reduce
+#          mean: [262.3] # mean if mode == fixed. An array as nested lists. Its shape equals the input shape without the reduced axes.
+#          std: [220.2]  # standard deviation if mode == fixed analogously to mean
+
+outputs:
+  - name: probability
+    description: probability in [0,1]
+    axes: bczyx
+    data_type: float32
+    data_range: [-inf, inf]
+    halo: [0, 0, 32, 48, 48]
+    shape:
+      reference_input: raw
+      scale: [1, 1, 1, 1, 1]
+      offset: [0, 0, 0, 0, 0]
+
+language: python
+framework: pytorch
+source: pybio.torch.models.UNet3D_Kinetochores_1ch.UNet3D
+kwargs: {input_channels: 1, output_channels: 1}
+dependencies: conda:../environment.yaml
+
+test_inputs: [test_input.npy]
+test_outputs: [test_output.npy]
+
+sample_inputs: [sample_input.npy]
+sample_outputs: [sample_output.npy]
+
+weights:
+ pytorch_state_dict:
+   authors: [Ashwin Samudre;@bioimage-io]
+   sha256: e4d3885bccbe41cbf6c1d825f3cd2b707c7021ead5593156007e407a16b27cf2
+   source: https://zenodo.org/record/3446812/files/unet3d_kinetochores_weights.torch
